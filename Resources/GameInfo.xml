@@ -367,7 +367,7 @@
       <Item>/Items/Weapons/Boss/ParticleAccelerator/Weapon_Wasteland_ParticleAccelerator</Item>
       <Item>/Items/Traits/Trait_Recovery</Item>
     </Event>
-    <Event name="늑대f">
+    <Event name="늑대">
       <Item>/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod</Item>
       <Item>/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod</Item>
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>
@@ -378,13 +378,5 @@
       <Item>/Items/Armor/Elder/Armor_Body_Elder</Item>
       <Item>/Items/Armor/Elder/Armor_Legs_Elder</Item>
     </Event>
-    <!--
-      Credit to /u/hlza00 for original locaiton and event names
-      
-      To do:
-      Verify that Brabus has correct Cold As Ice trait name (Earth)
-
-      Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
-    -->
   </EventItems>
 </GameInfo>
