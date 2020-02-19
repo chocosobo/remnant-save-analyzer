@@ -1,15 +1,16 @@
 body {
-    
+    font-family: 'Roboto', sans-serif;
     background: #343a40;
     color: #f8f9fa;
     position: relative;
 }
 
 h1 {
-  font-size: 48px;
-  margin-bottom: 5vh;
-  width: 100%;
-  text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 48px;
+    margin-bottom: 5vh;
+    width: 100%;
+    text-align: center;
 }
 
 .info button:hover {
