@@ -5,6 +5,10 @@ body {
     position: relative;
 }
 
+table {
+    font-family: 'Roboto', sans-serif;
+}
+
 h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 48px;
