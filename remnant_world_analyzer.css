@@ -1,3 +1,4 @@
+
 body {
     font-family: 'Roboto', sans-serif;
     background: #343a40;
@@ -5,12 +6,7 @@ body {
     position: relative;
 }
 
-table {
-    font-family: 'Roboto', sans-serif;
-}
-
 h1 {
-    font-family: 'Roboto', sans-serif;
     font-size: 48px;
     margin-bottom: 5vh;
     width: 100%;
@@ -18,55 +14,63 @@ h1 {
 }
 
 .info button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 p {
-  width: 50%;
-  margin-left: 25%;
+    width: 50%;
+    margin-left: 25%;
 }
 
 input, button {
-  height: 32px;
-  margin-left: calc(25vw);
-  width: 140px;
-  border-radius: 5px;
-  font-size: 24px;
-  padding: 4px 10px;
-  border: none;
-  margin-top: 40px;
-
+    height: 32px;
+    margin-left: calc(25vw);
+    width: 140px;
+    border-radius: 5px;
+    font-size: 24px;
+    padding: 4px 10px;
+    border: none;
+    margin-top: 40px;
 }
 
 #filters {
-  position: fixed;
-  right: calc(75vw);
-  display: none;
-  width: 320px;
-  top: 15vh;
+    position: fixed;
+    right: calc(75vw);
+    display: none;
+    width: 320px;
+    top: 15vh;
 }
 
-#filters button {
-  width: 320px;
-  margin-left: 0px;
+#filters-right {
+    position: fixed;
+    left: calc(75vw);
+    display: none;
+    width: 320px;
+    top: 15vh;
 }
+
+
+    #filters button, #filters-right button {
+        width: 320px;
+        margin-left: 0px;
+    }
 
 #chances, .piece-table {
-  margin-top: 40px;
-  font-family: 'Roboto', sans-serif;
-  border-collapse: collapse;
-  width: 50%;
-  margin-left: calc(25vw);
-  font-size: 28px;
+    margin-top: 40px;
+    font-family: 'Roboto', sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+    margin-left: calc(25vw);
+    font-size: 28px;
 }
 
 .adventure-mode {
-  display: none;
+    display: none;
 }
 
 #chances td, #chances th, .piece-table td, .piece-table th {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 
@@ -76,10 +80,9 @@ input, button {
 }*/
 
 #chances th, .piece-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #70a1ff;
-  color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #70a1ff;
+    color: white;
 }
-

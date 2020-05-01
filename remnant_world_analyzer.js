@@ -36,6 +36,12 @@ sublocations = {
     'DoeShrine': "과부의 제의실",
     'WolfShrine': "순교자의 성지",
     "Splitter": "연구소 정거장 알파"
+    "BarbTerror": "NeedleLair",
+    "QueensTemple": "IskalTemple",
+    "BrainBug": "StrangePass",
+    "Wisp": "CircletHatchery",
+    "FetidPool": "FetidPools",
+    "FlickeringHorror": "HallOfWhispers"
 }
 
 mainLocations = {
@@ -108,36 +114,59 @@ function getWorldData(textArray, worldMode) {
             eventType = "사이드 던전"
             eventName = textLine.split("/")[3].split("_")[2]
             currentSublocation = sublocations[eventName]
+            if (currentSublocation == undefined) {
+                currentSublocation = "Not added yet"
+            }
             inSmallDungeon = true
         }
         if (textLine.search("OverworldPOI") != -1) {
             eventType = "체크포인트"
             eventName = textLine.split("/")[3].split("_")[2]
             currentSublocation = currentMainLocation
+            if (worldMode == "#adventure") {
+                currentSublocation = ''
+            }
+            if (currentSublocation == undefined) {
+                currentSublocation = "Not added yet"
+            }
             inSmallDungeon = true
         }
         if (textLine.search("Quest_Boss") != -1) {
             eventType = "월드보스"
             eventName = textLine.split("/")[3].split("_")[2]
             currentSublocation = sublocations[eventName]
+            if (currentSublocation == undefined) {
+                currentSublocation = "Not added yet"
+            }
         }
         if (textLine.search("Siege") != -1) {
             eventType = "생존"
             eventName = textLine.split("/")[3].split("_")[2]
             currentSublocation = sublocations[eventName]
+            if (currentSublocation == undefined) {
+                currentSublocation = "Not added yet"
+            } 
         }
         if (textLine.search("Mini") != -1) {
             eventType = "미니보스"
             eventName = textLine.split("/")[3].split("_")[2]
             currentSublocation = sublocations[eventName]
+            if (currentSublocation == undefined) {
+                currentSublocation = "Not added yet"
+            } 
         }
         if (textLine.search("Quest_Event") != -1) {
             eventType = "아이템 드랍"
             eventName = textLine.split("/")[3].split("_")[2]
+
+            // edge case for out of order items
+            if (textLine.split("/")[1].split("_")[1] != textArray[i - 1].split("/")[1].split("_")[1]) {
+                currentSublocation = ''
+            }
         }
 
         if (textLine.search("Overworld_Zone") != -1) {
-            currentMainLocation = textLine.split("/")[3].split("_")[1] + " " + textLine.split("/")[3].split("_")[2] + " " +  textLine.split("/")[3].split("_")[3]
+            currentMainLocation = textLine.split("/")[3].split("_")[1] + " " + textLine.split("/")[3].split("_")[2] + " " + textLine.split("/")[3].split("_")[3]
             currentMainLocation = mainLocations[currentMainLocation]
         }
         
@@ -149,19 +178,32 @@ function getWorldData(textArray, worldMode) {
 
 
             if (zone != undefined && eventType != undefined && eventName != undefined) {
+
                 if (zones[zone][eventType] != undefined) {
                     if (zones[zone][eventType].search(eventName) == -1) {
                         zones[zone][eventType] += ", " + eventName
-                        html = "<tr><td>" + zone + ": " + currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": " + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
-                        $(worldMode).append(html)
-                    }       
+
+                        if (worldMode == "#adventure") {
+                            mainLocationText = ''
+                        } else {
+                            mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
+                        }
+                        html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') + "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
+                    }
                 } else {
                     zones[zone][eventType] = eventName
-                        html = "<tr><td>" + zone + ": " + currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": " + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
-                    $(worldMode).append(html)
+
+                    if (worldMode == "#adventure") {
+                        mainLocationText = ''
+                    } else {
+                        mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
+                    }
+
+                    html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') + "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
                 }
+                $(worldMode).append(html)
             }
-            $('#filters').show()
+            $('#filters, #filters-right').show()
 
             
         }
@@ -174,38 +216,38 @@ function getWorldData(textArray, worldMode) {
    
 
 
-function showDataFile(e, o){
+function showDataFile(e, o) {
 
     $('tr:not(.header-row)').remove()
 
-    text = e.target.result 
+    text = e.target.result
     text = text.split("/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13")[0]
-    text = text.split("/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City")[1].replace(/Game/g,"\n")
-    
+    text = text.split("/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City")[1].replace(/Game/g, "\n")
+
     textArray = text.split("\n")
 
 
-   adText = e.target.result
+    adText = e.target.result
     adText = adText.split(/\/Quests\/Quest_AdventureMode(.+)/)[1]
     if (adText != undefined) {
         adventureMode = true
-        adText = adText.replace(/Game/g,"\n")
+        adText = adText.replace(/Game/g, "\n")
         adTextArray = adText.split("\n")
     } else {
         adventureMode = false
     }
 
-        
-   
+
+
 
     if (adventureMode) {
         getWorldData(adTextArray, "#adventure")
-    } 
-    
+    }
     getWorldData(textArray, "#main")
 
 
 }
+
 
 $( document ).ready(function() {
     $('#toggle-items').on('click', function() {
@@ -232,8 +274,13 @@ $( document ).ready(function() {
             }
         })
     })
-    $('#toggle-adv').on('click', function() {
-       $('.main-mode, .adventure-mode').toggle()
+    $('#toggle-adv').on('click', function () {
+        $('.main-mode, .adventure-mode').toggle()
+        if ($(this).text() == "Show Adventure Mode") {
+            $(this).text("Show Campaign Mode")
+        } else {
+            $(this).text("Show Adventure Mode")
+        }
     })
     $('#toggle-poi').on('click', function() {
        $('tr:not(.header-row)').hide()
@@ -259,8 +306,40 @@ $( document ).ready(function() {
             }
         })     
     })
-        $('#toggle-all').on('click', function() {
-            $('tr').show()
+    $('#toggle-earth').on('click', function () {
+        $('tr:not(.header-row)').hide()
+        $('td').each(function () {
+            if ($(this).text().search('Earth') != -1) {
+                $(this).parent().show()
+            }
+        })
+    })
+    $('#toggle-rhom').on('click', function () {
+        $('tr:not(.header-row)').hide()
+        $('td').each(function () {
+            if ($(this).text().search('Rhom') != -1) {
+                $(this).parent().show()
+            }
+        })
+    })
+    $('#toggle-corsus').on('click', function () {
+        $('tr:not(.header-row)').hide()
+        $('td').each(function () {
+            if ($(this).text().search('Corsus') != -1) {
+                $(this).parent().show()
+            }
+        })
+    })
+    $('#toggle-yaesha').on('click', function () {
+        $('tr:not(.header-row)').hide()
+        $('td').each(function () {
+            if ($(this).text().search('Yaesha') != -1) {
+                $(this).parent().show()
+            }
+        })
+    })
+    $('.toggle-all').on('click', function () {
+        $('tr').show()
     })
 })
 
