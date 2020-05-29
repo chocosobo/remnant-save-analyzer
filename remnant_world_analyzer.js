@@ -38,10 +38,10 @@ sublocations = {
     "Splitter": "연구소 정거장 알파",
     "BarbTerror": "NeedleLair",
     "QueensTemple": "IskalTemple",
-    "BrainBug": "StrangePass",
-    "Wisp": "CircletHatchery",
-    "FetidPool": "FetidPools",
-    "FlickeringHorror": "HallOfWhispers"
+    "BrainBug": "이상한 통로",
+    "Wisp": "부화의 관"",
+    "FetidPool": "악취나는 웅덩이",
+    "FlickeringHorror": "속삭여오는 홀"
 }
 
 mainLocations = {
