@@ -39,7 +39,7 @@ sublocations = {
     "BarbTerror": "NeedleLair",
     "QueensTemple": "IskalTemple",
     "BrainBug": "이상한 통로",
-    "Wisp": "부화의 관"",
+    "Wisp": "부화의 관",
     "FetidPool": "악취나는 웅덩이",
     "FlickeringHorror": "속삭여오는 홀"
 }
