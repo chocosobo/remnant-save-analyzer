@@ -11,4 +11,5 @@ DLC 업데이트에 맞춰 원본 변화 적용
 
 
 세이브 판독기 http://wiki.chocosobo.com/extrastatic/remnant_world_analyzer.html
+
 한글패치 방법 http://wiki.chocosobo.com/remnant/번역/
