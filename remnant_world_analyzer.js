@@ -91,6 +91,8 @@ function getWorldData(textArray, worldMode) {
         var inSmallDungeon = true;
 
         textLine = textArray[i]
+
+													   
         if ( textLine.search("World_City") != -1) {
             zone = "Earth"
         }
@@ -106,6 +108,7 @@ function getWorldData(textArray, worldMode) {
 
         lastEventname = eventName
 
+								
         if (textLine.search("SmallD") != -1) {
             eventType = "Side Dungeon"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -115,6 +118,7 @@ function getWorldData(textArray, worldMode) {
             }
             inSmallDungeon = true
         }
+								  
         if (textLine.search("OverworldPOI") != -1) {
             eventType = "Point of Interest"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -127,6 +131,8 @@ function getWorldData(textArray, worldMode) {
             }
             inSmallDungeon = true
         }
+
+							   
         if (textLine.search("Quest_Boss") != -1) {
             eventType = "World Boss"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -135,6 +141,8 @@ function getWorldData(textArray, worldMode) {
                 currentSublocation = "Not added yet"
             }
         }
+
+						 
         if (textLine.search("Siege") != -1) {
             eventType = "Siege"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -143,6 +151,8 @@ function getWorldData(textArray, worldMode) {
                 currentSublocation = "Not added yet"
             }
         }
+
+							 
         if (textLine.search("Mini") != -1) {
             eventType = "Miniboss"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -151,25 +161,31 @@ function getWorldData(textArray, worldMode) {
                 currentSublocation = "Not added yet"
             }
         }
+
+							 
         if (textLine.search("Quest_Event") != -1) {
             eventType = "Item Drop"
             eventName = textLine.split("/")[3].split("_")[2]
 
-        // edge case for out of order items
-        if (textLine.split("/")[1].split("_")[1] != textArray[i - 1].split("/")[1].split("_")[1]) {
-            currentSublocation = ''
+            // edge case for out of order items
+            if (textLine.split("/")[1].split("_")[1] != textArray[i - 1].split("/")[1].split("_")[1]) {
+                currentSublocation = ''
+            }
+
         }
 
-    }
 
-    if (textLine.search("Overworld_Zone") != -1) {
-        currentMainLocation = textLine.split("/")[3].split("_")[1] + " " + textLine.split("/")[3].split("_")[2] + " " +  textLine.split("/")[3].split("_")[3]
-        currentMainLocation = mainLocations[currentMainLocation]
-    }
-    
-    if (eventName != lastEventname) {
-      // Replacements
-        if (eventName != undefined) {
+        if (textLine.search("Overworld_Zone") != -1) {
+            currentMainLocation = textLine.split("/")[3].split("_")[1] + " " + textLine.split("/")[3].split("_")[2] + " " +  textLine.split("/")[3].split("_")[3]
+            currentMainLocation = mainLocations[currentMainLocation]
+
+			
+        }
+
+        //Renames the bosses
+        if (eventName != lastEventname) {
+          // Replacements
+            if (eventName != undefined) {
              eventName = eventName.replace('FlickeringHorror', '꿈을 먹는 자')
              .replace('Wisp', '위습 고치')
              .replace('HoundMaster', '폭군')
@@ -299,36 +315,37 @@ function getWorldData(textArray, worldMode) {
              .replace('ReggiesRing', '빛 바랜 반지')
             
         }
-       
-        if (zone != undefined && eventType != undefined && eventName != undefined) {
+            if (zone != undefined && eventType != undefined && eventName != undefined) {
 
-            if (zones[zone][eventType] != undefined) {
-                if (zones[zone][eventType].search(eventName) == -1) {
-                    zones[zone][eventType] += ", " + eventName
+                if (zones[zone][eventType] != undefined) {
+                    if (zones[zone][eventType].search(eventName) == -1) {
+                        zones[zone][eventType] += ", " + eventName
 
-                    if (worldMode == "#adventure") {
-                        mainLocationText = ''
-                    } else {
-                        mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
+                        if (worldMode == "#adventure") {
+                            mainLocationText = ''
+                        } else {
+                            mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
+                        }
+                        html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
                     }
-                    html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"   
+                } else {
+                    zones[zone][eventType] = eventName
+
+                        if (worldMode == "#adventure") {
+                            mainLocationText = ''
+                        } else {
+                            mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
+                        }
+
+                        html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
                 }
-            } else {
-                zones[zone][eventType] = eventName
-
-                    if (worldMode == "#adventure") {
-                        mainLocationText = ''
-                    } else {
-                        mainLocationText = currentMainLocation.split(/(?=[A-Z])/).join(' ') + ": "
-                    }
-
-                    html = "<tr><td>" + zone + ": " + mainLocationText + currentSublocation.split(/(?=[A-Z])/).join(' ') +  "</td><td>" + eventType + "</td><td>" + eventName.split(/(?=[A-Z])/).join(' ') + "</td></tr>"
+                $(worldMode).append(html)
             }
-            $(worldMode).append(html)
+            $('#filters, #filters-right').show()
         }
-        $('#filters, #filters-right').show()
+											
     }
-}
+
 
 }
 
@@ -341,7 +358,7 @@ function showDataFile(e, o){
     text = e.target.result
     text = text.split("/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13")[0]
     text = text.split("/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City")[1].replace(/Game/g,"\n")
-    
+
     textArray = text.split("\n")
 
 
@@ -365,6 +382,8 @@ function showDataFile(e, o){
     } else {
         adventureMode = false
     }
+
+
 
 
     if (adventureMode) {
@@ -402,10 +421,10 @@ $( document ).ready(function() {
     })
     $('#toggle-adv').on('click', function() {
        $('.main-mode, .adventure-mode').toggle()
-       if ($(this).text() == "Show Adventure Mode") {
-        $(this).text("Show Campaign Mode")
+       if ($(this).text() == "눌러서 캠페인 보기") {
+        $(this).text("눌러서 어드벤처 보기")
        } else {
-         $(this).text("Show Adventure Mode")
+         $(this).text("눌러서 캠페인 보기")
        }
     })
     $('#toggle-poi').on('click', function() {
