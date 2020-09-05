@@ -92,6 +92,12 @@ function getWorldData(textArray, worldMode) {
 
         textLine = textArray[i]
 
+        if (!textLine.split("/")[1]) {
+            // hack shit because I'm getting weird extra lines
+            // could perhaps safely remove this by starting at i=1
+            continue
+        }
+
 													   
         if ( textLine.search("World_City") != -1) {
             zone = "Earth"
@@ -357,23 +363,30 @@ function showDataFile(e, o){
 
     text = e.target.result
     text = text.split("/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13")[0]
-    text = text.split("/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City")[1].replace(/Game/g,"\n")
+    main_campaign = text.split("/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City")[1]
+    if (main_campaign) {
+        text = main_campaign.replace(/Game/g,"\n")
+    } else { // subject 2923 campaign
+        text = text.split("/Game/Campaign_Clementine/Quests/WardPrime/Quest_WardPrime_Template.Quest_WardPrime_Template")[0]
+        text = text.split("/Game/World_Rural/Templates/Template_Rural_Overworld_02.Template_Rural_Overworld_02")[1].replace(/Game/g,"\n")
+    }
 
     textArray = text.split("\n")
 
 
-   adText = e.target.result
+    adText = e.target.result
 
-   adText = adText.split("\n")
-   tempList = []
-   for(i = 0; i < adText.length; i++)
-   {
-     if (String(adText[i]).includes('Adventure') === true)
-     {
-       tempList.push(adText[i])
-     }
-   }
-   adText = tempList[1]
+    adText = adText.split("\n")
+    tempList = []
+    for(i = 0; i < adText.length; i++)
+    {
+        if (String(adText[i]).includes('Adventure') === true)
+        {
+            tempList.push(adText[i])
+        }
+    }
+    // regardless of campaign type, the last line collected will have our current adventure data
+    adText = tempList[tempList.length - 1]
 
     if (adText != undefined) {
         adventureMode = true
