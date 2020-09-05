@@ -58,11 +58,32 @@ mainLocations = {
 function loadFile(o) {
     var fr = new FileReader();
     fr.onload = function(e) {
-      showDataFile(e, o);
+        showDataFile(e, o);
     };
     fr.readAsText(o.files[0]);
 }
 
+function preventDefaults (e) {
+    e.preventDefault()
+    e.stopPropagation()
+}
+
+let dropArea;
+
+function highlight(e) {
+    dropArea.classList.add('highlight');
+}
+
+function unhighlight(e) {
+    dropArea.classList.remove('highlight');
+}
+
+function handleDrop(e) {
+    files = e.dataTransfer.files;
+
+    o = {files: files}
+    loadFile(o);
+}
 
 function getWorldData(textArray, worldMode) {
 
@@ -76,7 +97,7 @@ function getWorldData(textArray, worldMode) {
     var currentMainLocation;
 
     if (worldMode == "#adventure") {
-        currentMainLocation = textArray[3].split("/")[1].split("_")[1]
+        currentMainLocation = textArray[1].split("/")[1].split("_")[1]
     } else {
         currentMainLocation = "Fairview"
     }
@@ -98,7 +119,13 @@ function getWorldData(textArray, worldMode) {
             continue
         }
 
-													   
+        //translate world/region names to readable text
+				 
+				  
+	 
+   
+
+			   
         if ( textLine.search("World_City") != -1) {
             zone = "Earth"
         }
@@ -114,7 +141,7 @@ function getWorldData(textArray, worldMode) {
 
         lastEventname = eventName
 
-								
+        //look for side dungeons
         if (textLine.search("SmallD") != -1) {
             eventType = "Side Dungeon"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -124,7 +151,7 @@ function getWorldData(textArray, worldMode) {
             }
             inSmallDungeon = true
         }
-								  
+        //look for overworld POI's
         if (textLine.search("OverworldPOI") != -1) {
             eventType = "Point of Interest"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -138,7 +165,7 @@ function getWorldData(textArray, worldMode) {
             inSmallDungeon = true
         }
 
-							   
+        //Look for quest bosses
         if (textLine.search("Quest_Boss") != -1) {
             eventType = "World Boss"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -148,7 +175,7 @@ function getWorldData(textArray, worldMode) {
             }
         }
 
-						 
+        //look for sieges
         if (textLine.search("Siege") != -1) {
             eventType = "Siege"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -158,7 +185,7 @@ function getWorldData(textArray, worldMode) {
             }
         }
 
-							 
+        //look for minibosses
         if (textLine.search("Mini") != -1) {
             eventType = "Miniboss"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -168,7 +195,7 @@ function getWorldData(textArray, worldMode) {
             }
         }
 
-							 
+        //look for Item drops
         if (textLine.search("Quest_Event") != -1) {
             eventType = "Item Drop"
             eventName = textLine.split("/")[3].split("_")[2]
@@ -185,14 +212,14 @@ function getWorldData(textArray, worldMode) {
             currentMainLocation = textLine.split("/")[3].split("_")[1] + " " + textLine.split("/")[3].split("_")[2] + " " +  textLine.split("/")[3].split("_")[3]
             currentMainLocation = mainLocations[currentMainLocation]
 
-			
+   
         }
 
         //Renames the bosses
         if (eventName != lastEventname) {
           // Replacements
             if (eventName != undefined) {
-             eventName = eventName.replace('FlickeringHorror', '꿈을 먹는 자')
+                 eventName = eventName.replace('FlickeringHorror', '꿈을 먹는 자')
              .replace('Wisp', '위습 고치')
              .replace('HoundMaster', '폭군')
              .replace('GunslingersCharm', '총잡이의 부적')
@@ -321,6 +348,206 @@ function getWorldData(textArray, worldMode) {
              .replace('ReggiesRing', '빛 바랜 반지')
             
         }
+																 
+													  
+													 
+												  
+															
+															  
+																  
+													   
+															
+												   
+																
+														 
+														  
+														
+															
+															 
+															
+																  
+															
+														   
+													 
+																				  
+														 
+															
+													  
+															
+												   
+														
+													  
+														   
+															
+													   
+														
+													   
+																		  
+													
+															  
+														
+														  
+															
+														 
+														
+															  
+															  
+													
+												 
+														   
+															 
+																
+													  
+														   
+												  
+															   
+														
+														 
+													   
+														   
+															
+														  
+																 
+														   
+														  
+													
+																				 
+														
+														   
+													
+														  
+												   
+													   
+													 
+														  
+														   
+													  
+													   
+													 
+																	  
+												   
+															 
+													   
+														
+														   
+														
+													   
+															 
+														   
+																 
+													 
+										
+												  
+															 
+															   
+															   
+												 
+													   
+												
+													 
+														 
+			
+		 
+            //This populates the table for data to be pulled
+		 
+		 
+			  
+		 
+				 
+				  
+	   
+		 
+		
+				
+		
+		
+	   
+			   
+		  
+			   
+				  
+		 
+		 
+		 
+					  
+		
+		 
+		 
+			   
+		
+	   
+		 
+		 
+		 
+	   
+	   
+	   
+					
+		
+				 
+	   
+				
+		 
+		
+	   
+				 
+				 
+		
+			 
+		 
+		  
+				
+		 
+		 
+			  
+		
+	   
+		
+	   
+		 
+		 
+		
+				 
+		 
+		
+		
+					 
+	   
+		 
+		
+		
+		
+	   
+		 
+		
+		 
+		 
+	   
+		 
+				   
+		
+		  
+	   
+	   
+		 
+	   
+	   
+		  
+		 
+				 
+		 
+		  
+			  
+		  
+		
+				  
+			 
+	   
+			
+		 
+		
+   
+   
             if (zone != undefined && eventType != undefined && eventName != undefined) {
 
                 if (zones[zone][eventType] != undefined) {
@@ -347,19 +574,31 @@ function getWorldData(textArray, worldMode) {
                 }
                 $(worldMode).append(html)
             }
-            $('#filters, #filters-right').show()
+            $('#filters').show()
         }
-											
+	 
     }
 
 
 }
 
+updateFilters = function(checked) {
+    $('.filter').each((i,f) => {
+        try {
+            f.checked=checked
+        }
+        catch {}
+    })
 
+    if (checked) {
+        document.getElementById('f-name').value = ""
+    }
+}
 
 function showDataFile(e, o){
-
     $('tr:not(.header-row)').remove()
+
+    updateFilters(true)
 
     text = e.target.result
     text = text.split("/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13")[0]
@@ -373,12 +612,18 @@ function showDataFile(e, o){
 
     textArray = text.split("\n")
 
-
     adText = e.target.result
+
+	   
 
     adText = adText.split("\n")
     tempList = []
     for(i = 0; i < adText.length; i++)
+	
+														  
+	  
+							   
+	  
     {
         if (String(adText[i]).includes('Adventure') === true)
         {
@@ -387,7 +632,7 @@ function showDataFile(e, o){
     }
     // regardless of campaign type, the last line collected will have our current adventure data
     adText = tempList[tempList.length - 1]
-
+   
     if (adText != undefined) {
         adventureMode = true
         adText = adText.replace(/Game/g,"\n")
@@ -404,99 +649,144 @@ function showDataFile(e, o){
     }
     getWorldData(textArray, "#main")
 
-
+    $('.main-mode').show()
+    $('.adventure-mode').hide()
+    $('#toggle-adv').text("Show Adventure Mode")
 }
 
-$( document ).ready(function() {
-    $('#toggle-items').on('click', function() {
-       $('tr:not(.header-row)').hide()
+updateTable = function() {
+    $('tr:not(.header-row)').hide()
+
+    //Type
+    if (document.getElementById('f-items').checked) {
+		   
         $('td').each(function() {
             if ($(this).text().search('Item Drop') != -1) {
                 $(this).parent().show()
             }
         })
-    })
-     $('#toggle-sd').on('click', function() {
-       $('tr:not(.header-row)').hide()
+    }
+    if (document.getElementById('f-sidedgs').checked) {
+		   
         $('td').each(function() {
             if ($(this).text().search('Side Dungeon') != -1) {
                 $(this).parent().show()
             }
         })
-    })
-    $('#toggle-mb').on('click', function() {
-       $('tr:not(.header-row)').hide()
+    }
+    if (document.getElementById('f-sieges').checked) {
+		   
+		 
+						   
+			
+	
+	
+   
+			
+			
+		 
+		 
+	  
+		
+  
+   
+			
+		   
+		 
+				
+			
+	
+	
+   
+			
+		   
+        $('td').each(function() {
+			   
+			
+	
+	
+   
+			
+		   
+		 
+            if ($(this).text().search('Siege') != -1) {
+                $(this).parent().show()
+            }
+        })
+    }
+    if (document.getElementById('f-poi').checked) {
+		   
+        $('td').each(function() {
+            if ($(this).text().search('Point of Interest') != -1) {
+                $(this).parent().show()
+            }
+        })
+    }
+    if (document.getElementById('f-minibosses').checked) {
+		   
         $('td').each(function() {
             if ($(this).text().search('Miniboss') != -1) {
                 $(this).parent().show()
             }
         })
-    })
-    $('#toggle-adv').on('click', function() {
-       $('.main-mode, .adventure-mode').toggle()
-       if ($(this).text() == "눌러서 캠페인 보기") {
-        $(this).text("눌러서 어드벤처 보기")
-       } else {
-         $(this).text("눌러서 캠페인 보기")
-       }
-    })
-    $('#toggle-poi').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Point') != -1) {
-                $(this).parent().show()
-            }
-        })
-    })
-    $('#toggle-bosses').on('click', function() {
-       $('tr:not(.header-row)').hide()
+    }
+    if (document.getElementById('f-bosses').checked) {
+		   
         $('td').each(function() {
             if ($(this).text().search('World Boss') != -1) {
                 $(this).parent().show()
             }
         })
+    }
+
+    //Regions
+    earth = document.getElementById('f-earth').checked
+    rhom = document.getElementById('f-rhom').checked
+    corsus = document.getElementById('f-corsus').checked
+    yaesha = document.getElementById('f-yaesha').checked
+    $('td').each(function() {
+        if (
+        ($(this).text().search('Earth')!=-1 && !earth) ||
+        ($(this).text().search('Rhom')!=-1 && !rhom) ||
+        ($(this).text().search('Corsus')!=-1 && !corsus) ||
+        ($(this).text().search('Yaesha')!=-1 && !yaesha))
+        {
+            $(this).parent().hide()
+        }
     })
-    $('#toggle-sieges').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Siege') != -1) {
-                $(this).parent().show()
+
+    //Name filter
+    name = document.getElementById('f-name').value
+    if (name.length>0) {
+        jQuery('tr:not(.header-row)').each(function() {
+		 
+            if ($(this).find('td:eq(2)').text().toLowerCase().search(name.toLowerCase())==-1) {
+                $(this).hide()
             }
         })
+    }
+}
+
+$( document ).ready(function() {
+    $('#apply').on('click',updateTable)
+
+    $('#toggle-adv').on('click', function() {
+        $('.main-mode, .adventure-mode').toggle()
+        if ($(this).text() == "Show Adventure Mode") {
+            $(this).text("Show Campaign Mode")
+        } else {
+            $(this).text("Show Adventure Mode")
+        }
     })
-    $('#toggle-earth').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Earth') != -1) {
-                $(this).parent().show()
-            }
-        })
-    })
-    $('#toggle-rhom').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Rhom') != -1) {
-                $(this).parent().show()
-            }
-        })
-    })
-    $('#toggle-corsus').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Corsus') != -1) {
-                $(this).parent().show()
-            }
-        })
-    })
-    $('#toggle-yaesha').on('click', function() {
-       $('tr:not(.header-row)').hide()
-        $('td').each(function() {
-            if ($(this).text().search('Yaesha') != -1) {
-                $(this).parent().show()
-            }
-        })
-    })
-        $('.toggle-all').on('click', function() {
-            $('tr').show()
-    })
+
+    dropArea = document.getElementById('drop-area');
+    dropArea.addEventListener('dragenter',preventDefaults, false);
+    dropArea.addEventListener('dragenter',highlight, false);
+    dropArea.addEventListener('dragover',preventDefaults, false);
+    dropArea.addEventListener('dragover',highlight, false);
+    dropArea.addEventListener('dragleave',preventDefaults, false);
+    dropArea.addEventListener('dragleave',unhighlight, false);
+    dropArea.addEventListener('drop',preventDefaults, false);
+    dropArea.addEventListener('drop',unhighlight, false);
+    dropArea.addEventListener('drop',handleDrop, false);
 })
